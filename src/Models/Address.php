@@ -72,10 +72,6 @@ class Address extends Model
     use ValidatingTrait;
     use GeoDistanceTrait;
 
-    protected $latColumn = 'latitude';
-
-    protected $lngColumn = 'longitude';
-
     /**
      * {@inheritdoc}
      */
@@ -170,6 +166,8 @@ class Address extends Model
             'is_billing' => 'sometimes|boolean',
             'is_shipping' => 'sometimes|boolean',
         ]);
+        $this->latColumn = 'latitude';
+        $this->lngColumn = 'longitude';
 
         parent::__construct($attributes);
     }
