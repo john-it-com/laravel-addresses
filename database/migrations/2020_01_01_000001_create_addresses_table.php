@@ -25,9 +25,9 @@ class CreateAddressesTable extends Migration
             $table->string('postal_code')->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
-            $table->boolean('is_primary')->default(false);
-            $table->boolean('is_billing')->default(false);
-            $table->boolean('is_shipping')->default(false);
+            $table->boolean('is_primary');
+            $table->boolean('is_billing');
+            $table->boolean('is_shipping');
             $table->timestamps();
             $table->softDeletes();
         });
