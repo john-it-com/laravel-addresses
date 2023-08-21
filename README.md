@@ -59,8 +59,6 @@ $user->addresses()->create([
     'latitude' => '31.2467601',
     'longitude' => '29.9020376',
     'is_primary' => true,
-    'is_billing' => true,
-    'is_shipping' => true,
 ]);
 
 // Create multiple new addresses

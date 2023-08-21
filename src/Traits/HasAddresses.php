@@ -7,7 +7,7 @@ namespace Rinvex\Addresses\Traits;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-trait Addressable
+trait HasAddresses
 {
     /**
      * Register a deleted model event with the dispatcher.

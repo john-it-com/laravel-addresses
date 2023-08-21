@@ -31,17 +31,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property float               $latitude
  * @property float               $longitude
  * @property bool                $is_primary
- * @property bool                $is_billing
- * @property bool                $is_shipping
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $addressable
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Addresses\Models\Address inCountry($countryCode)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Addresses\Models\Address inLanguage($languageCode)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Addresses\Models\Address isBilling()
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Addresses\Models\Address isPrimary()
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Addresses\Models\Address isShipping()
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Addresses\Models\Address outside($distance, $measurement = null, $latitude = null, $longitude = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Addresses\Models\Address whereAddressableId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Addresses\Models\Address whereAddressableType($value)
@@ -90,8 +86,7 @@ class Address extends Model
         'latitude',
         'longitude',
         'is_primary',
-        'is_billing',
-        'is_shipping',
+        'type',
     ];
 
     /**
@@ -112,8 +107,6 @@ class Address extends Model
         'latitude' => 'float',
         'longitude' => 'float',
         'is_primary' => 'boolean',
-        'is_billing' => 'boolean',
-        'is_shipping' => 'boolean',
         'deleted_at' => 'datetime',
     ];
 
@@ -163,8 +156,6 @@ class Address extends Model
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'is_primary' => 'sometimes|boolean',
-            'is_billing' => 'sometimes|boolean',
-            'is_shipping' => 'sometimes|boolean',
         ]);
         $this->latColumn = 'latitude';
         $this->lngColumn = 'longitude';
@@ -192,30 +183,6 @@ class Address extends Model
     public function scopeIsPrimary(Builder $builder): Builder
     {
         return $builder->where('is_primary', true);
-    }
-
-    /**
-     * Scope billing addresses.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeIsBilling(Builder $builder): Builder
-    {
-        return $builder->where('is_billing', true);
-    }
-
-    /**
-     * Scope shipping addresses.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeIsShipping(Builder $builder): Builder
-    {
-        return $builder->where('is_shipping', true);
     }
 
     /**
