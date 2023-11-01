@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int                 $id
  * @property int                 $addressable_id
  * @property string              $addressable_type
+ * @property string              $address_field
  * @property string              $label
  * @property string              $given_name
  * @property string              $family_name
@@ -80,6 +81,7 @@ class Address extends Model
         'organization',
         'country_code',
         'street',
+        'address_supplement',
         'state',
         'city',
         'postal_code',
@@ -101,6 +103,7 @@ class Address extends Model
         'organization' => 'string',
         'country_code' => 'string',
         'street' => 'string',
+        'address_supplement' => 'string',
         'state' => 'string',
         'city' => 'string',
         'postal_code' => 'string',
@@ -150,6 +153,7 @@ class Address extends Model
             'organization' => 'nullable|string|strip_tags|max:150',
             'country_code' => 'nullable|alpha|size:2|country',
             'street' => 'nullable|string|strip_tags|max:150',
+            'address_supplement' => 'nullable|string|strip_tags|max:150',
             'state' => 'nullable|string|strip_tags|max:150',
             'city' => 'nullable|string|strip_tags|max:150',
             'postal_code' => 'nullable|string|strip_tags|max:150',
@@ -219,6 +223,30 @@ class Address extends Model
     public function getFullNameAttribute(): string
     {
         return implode(' ', [$this->given_name, $this->family_name]);
+    }
+
+    public function getAddressFieldAttribute(): string
+    {
+        return collect([
+            $this->organization,
+            $this->full_name,
+            $this->street,
+            $this->address_supplement,
+            "{$this->postal_code} {$this->city}",
+            country($this->country_code),
+        ])
+            // set all items which consists of spaces only to empty string
+            ->map(function(?string $item) {
+                if($item === null) {
+                    return null;
+                }
+                return trim($item);
+            })
+            // remove all empty / null items from collection
+            ->reject(function(?string $item) {
+                return empty($item);
+            })
+            ->implode("\n");
     }
 
     /**
