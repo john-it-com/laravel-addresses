@@ -48,8 +48,8 @@ $user = new \App\Models\User::find(1);
 // Create a new address
 $user->addresses()->create([
     'label' => 'Default Address',
-    'given_name' => 'Abdelrahman',
-    'family_name' => 'Omran',
+    'first_name' => 'Abdelrahman',
+    'last_name' => 'Omran',
     'organization' => 'Rinvex',
     'country_code' => 'eg',
     'street' => '56 john doe st.',

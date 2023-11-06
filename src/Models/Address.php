@@ -20,8 +20,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string              $addressable_type
  * @property string              $address_field
  * @property string              $label
- * @property string              $given_name
- * @property string              $family_name
+ * @property string              $first_name
+ * @property string              $last_name
  * @property string              $full_name
  * @property string              $organization
  * @property string              $country_code
@@ -76,8 +76,8 @@ class Address extends Model
         'addressable_id',
         'addressable_type',
         'label',
-        'given_name',
-        'family_name',
+        'first_name',
+        'last_name',
         'organization',
         'country_code',
         'street',
@@ -98,8 +98,8 @@ class Address extends Model
         'addressable_id' => 'integer',
         'addressable_type' => 'string',
         'label' => 'string',
-        'given_name' => 'string',
-        'family_name' => 'string',
+        'first_name' => 'string',
+        'last_name' => 'string',
         'organization' => 'string',
         'country_code' => 'string',
         'street' => 'string',
@@ -148,8 +148,8 @@ class Address extends Model
             'addressable_id' => 'required|integer',
             'addressable_type' => 'required|string|strip_tags|max:150',
             'label' => 'nullable|string|strip_tags|max:150',
-            'given_name' => 'required|string|strip_tags|max:150',
-            'family_name' => 'nullable|string|strip_tags|max:150',
+            'first_name' => 'required|string|strip_tags|max:150',
+            'last_name' => 'nullable|string|strip_tags|max:150',
             'organization' => 'nullable|string|strip_tags|max:150',
             'country_code' => 'nullable|alpha|size:2|country',
             'street' => 'nullable|string|strip_tags|max:150',
@@ -222,7 +222,7 @@ class Address extends Model
      */
     public function getFullNameAttribute(): string
     {
-        return implode(' ', [$this->given_name, $this->family_name]);
+        return implode(' ', [$this->first_name, $this->last_name]);
     }
 
     public function getAddressFieldAttribute(): string
