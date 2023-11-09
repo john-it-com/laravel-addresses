@@ -230,7 +230,7 @@ class Address extends Model
         return collect([
             $this->organization,
             $this->full_name,
-            $this->street,
+            $this->street." ".$this->street_number,
             $this->address_supplement,
             "{$this->postal_code} {$this->city}",
             country($this->country_code),
