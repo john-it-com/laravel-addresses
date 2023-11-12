@@ -233,7 +233,7 @@ class Address extends Model
             $this->street." ".$this->street_number,
             $this->address_supplement,
             "{$this->postal_code} {$this->city}",
-            country($this->country_code),
+            is_string(country($this->country_code)) ? country($this->country_code) : null,
         ])
             // set all items which consists of spaces only to empty string
             ->map(function(?string $item) {
