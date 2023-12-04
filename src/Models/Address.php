@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string              $organization
  * @property string              $country_code
  * @property string              $street
+ * @property string              $full_street
  * @property string              $state
  * @property string              $city
  * @property string              $postal_code
@@ -223,6 +224,11 @@ class Address extends Model
     public function getFullNameAttribute(): string
     {
         return implode(' ', [$this->first_name, $this->last_name]);
+    }
+
+    public function getFullStreetAttribute(): string
+    {
+        return implode(' ', [$this->street, $this->street_number]);
     }
 
     public function getAddressFieldAttribute(): string

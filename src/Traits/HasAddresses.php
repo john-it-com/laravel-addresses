@@ -6,6 +6,8 @@ namespace Rinvex\Addresses\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use JohnIt\Bc\Core\Domain\Models\Address;
+use JohnIt\Bc\Core\Domain\Models\Email;
 
 trait HasAddresses
 {
@@ -36,10 +38,12 @@ trait HasAddresses
      *
      * @return void
      */
-    public static function bootAddressable()
+    public static function bootHasAddresses()
     {
-        static::deleted(function (self $model) {
-            $model->addresses()->delete();
+        static::deleting(function (self $model) {
+            $model->addresses()->cursor()->each(function(Address $address) {
+                $address->forceDelete();
+            });
         });
     }
 

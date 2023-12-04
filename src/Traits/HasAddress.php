@@ -34,10 +34,12 @@ trait HasAddress
      *
      * @return void
      */
-    public static function bootAddressable()
+    public static function bootHasAddress()
     {
-        static::deleted(function (self $model) {
-            $model->address()->delete();
+        static::deleting(function (self $model) {
+            if($model->address !== null) {
+                $model->address->forceDelete();
+            }
         });
     }
 
