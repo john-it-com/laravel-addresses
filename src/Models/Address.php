@@ -235,6 +235,7 @@ class Address extends Model
     {
         return collect([
             $this->organization,
+            $this->department,
             $this->full_name,
             $this->street." ".$this->street_number,
             $this->address_supplement,
