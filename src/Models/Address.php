@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string              $label
  * @property string              $first_name
  * @property string              $last_name
- * @property string              $full_name
  * @property string              $organization
  * @property string              $country_code
  * @property string              $street
@@ -216,16 +215,6 @@ class Address extends Model
         return $builder->where('language_code', $languageCode);
     }
 
-    /**
-     * Get full name attribute.
-     *
-     * @return string
-     */
-    public function getFullNameAttribute(): string
-    {
-        return implode(' ', [$this->first_name, $this->last_name]);
-    }
-
     public function getFullStreetAttribute(): string
     {
         return implode(' ', [$this->street, $this->street_number]);
@@ -234,9 +223,8 @@ class Address extends Model
     public function getAddressFieldAttribute(): string
     {
         return collect([
-            $this->organization,
-            $this->department,
             $this->full_name,
+            $this->department,
             $this->street." ".$this->street_number,
             $this->address_supplement,
             "{$this->postal_code} {$this->city}",
