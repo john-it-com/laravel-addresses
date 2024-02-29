@@ -6,7 +6,7 @@ namespace Rinvex\Addresses\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-trait HasAddress
+trait InteractsWithAddress
 {
     /**
      * Register a deleted model event with the dispatcher.

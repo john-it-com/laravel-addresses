@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use JohnIt\Bc\Core\Domain\Models\Address;
 use JohnIt\Bc\Core\Domain\Models\Email;
 
-trait HasAddresses
+trait InteractsWithAddresses
 {
     /**
      * Register a deleted model event with the dispatcher.
