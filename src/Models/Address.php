@@ -215,6 +215,20 @@ class Address extends Model
         return $builder->where('language_code', $languageCode);
     }
 
+    public function getAddressLineAttribute(): string
+    {
+        return implode(', ', [
+            implode(' ', [
+                $this->street,
+                $this->street_number
+            ]),
+            implode(' ', [
+                $this->postal_code,
+                $this->city
+            ])
+        ]);
+    }
+
     public function getFullStreetAttribute(): string
     {
         return implode(' ', [$this->street, $this->street_number]);
