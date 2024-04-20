@@ -229,6 +229,27 @@ class Address extends Model
         ]);
     }
 
+    public function getFullAddressLineAttribute(): string
+    {
+        return implode(', ', collect([
+            $this->organization,
+            $this->first_name && $this->last_name
+                ? implode(' ', [
+                    $this->first_name,
+                    $this->last_name
+                ])
+                : null,
+            implode(' ', [
+                $this->street,
+                $this->street_number
+            ]),
+            implode(' ', [
+                $this->postal_code,
+                $this->city
+            ])
+        ])->filter()->toArray());
+    }
+
     public function getFullStreetAttribute(): string
     {
         return implode(' ', [$this->street, $this->street_number]);
