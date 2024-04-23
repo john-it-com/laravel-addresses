@@ -38,7 +38,7 @@ trait InteractsWithAddresses
      *
      * @return void
      */
-    public static function bootHasAddresses()
+    public static function bootInteractsWithAddresses()
     {
         static::deleting(function (self $model) {
             $model->addresses()->cursor()->each(function(Address $address) {
