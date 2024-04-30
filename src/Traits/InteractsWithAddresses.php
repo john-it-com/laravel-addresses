@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Addresses\Traits;
 
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use JohnIt\Bc\Core\Domain\Models\Address;
@@ -78,5 +79,15 @@ trait InteractsWithAddresses
         }
 
         return collect($results);
+    }
+
+    /**
+     * Get the primary address for the contact.
+     */
+    public function primaryAddress(): MorphOne
+    {
+        return $this
+            ->morphOne(Address::class, 'addressable')
+            ->where('is_primary', true);
     }
 }
