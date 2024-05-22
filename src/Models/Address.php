@@ -232,17 +232,10 @@ class Address extends Model
     public function getFullAddressLineAttribute(): string
     {
         return implode(', ', collect([
-            $this->organization,
-            $this->first_name && $this->last_name
-                ? implode(' ', [
-                    $this->first_name,
-                    $this->last_name
-                ])
-                : null,
-            implode(' ', [
-                $this->street,
-                $this->street_number
-            ]),
+            $this->full_name,
+            $this->department,
+            $this->full_street,
+            $this->address_supplement,
             implode(' ', [
                 $this->postal_code,
                 $this->city
@@ -255,12 +248,12 @@ class Address extends Model
         return implode(' ', [$this->street, $this->street_number]);
     }
 
-    public function getAddressFieldAttribute(): string
+    public function getFullAddressFieldAttribute(): string
     {
         return collect([
             $this->full_name,
             $this->department,
-            $this->street." ".$this->street_number,
+            $this->full_street,
             $this->address_supplement,
             "{$this->postal_code} {$this->city}",
             is_string(country($this->country_code)) ? country($this->country_code) : null,
