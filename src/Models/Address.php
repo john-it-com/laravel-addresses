@@ -88,7 +88,6 @@ class Address extends Model
         'latitude',
         'longitude',
         'is_primary',
-        'type',
     ];
 
     /**
