@@ -216,16 +216,16 @@ class Address extends Model
 
     public function getAddressLineAttribute(): string
     {
-        return implode(', ', [
-            implode(' ', [
-                $this->street,
-                $this->street_number
-            ]),
+        return collect([
+            $this->full_street,
+            $this->address_supplement,
             implode(' ', [
                 $this->postal_code,
                 $this->city
             ])
-        ]);
+        ])
+            ->filter()
+            ->implode(", ");
     }
 
     public function getFullAddressLineAttribute(): string
