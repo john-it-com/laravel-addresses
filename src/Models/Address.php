@@ -7,6 +7,7 @@ namespace Rinvex\Addresses\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Jackpopp\GeoDistance\GeoDistanceTrait;
+use JohnIt\Bc\Core\Domain\Enums\PhoneticType;
 use Rinvex\Support\Traits\ValidatingTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -75,15 +76,25 @@ class Address extends Model
     protected $fillable = [
         'addressable_id',
         'addressable_type',
+        'phonetic_type',
         'label',
+        'salutation_id',
         'first_name',
+        'first_name_phonetic',
         'last_name',
+        'last_name_phonetic',
         'organization',
+        'organization_phonetic',
+        'department',
+        'department_phonetic',
         'country_code',
         'street',
+        'street_phonetic',
+        'street_number',
         'address_supplement',
         'state',
         'city',
+        'city_phonetic',
         'postal_code',
         'latitude',
         'longitude',
@@ -94,14 +105,17 @@ class Address extends Model
      * {@inheritdoc}
      */
     protected $casts = [
-        'addressable_id' => 'integer',
+        'salutation_id' => 'string',
+        'addressable_id' => 'string',
         'addressable_type' => 'string',
         'label' => 'string',
         'first_name' => 'string',
         'last_name' => 'string',
         'organization' => 'string',
+        'department' => 'string',
         'country_code' => 'string',
         'street' => 'string',
+        'street_number' => 'string',
         'address_supplement' => 'string',
         'state' => 'string',
         'city' => 'string',
@@ -109,6 +123,7 @@ class Address extends Model
         'latitude' => 'float',
         'longitude' => 'float',
         'is_primary' => 'boolean',
+        'phonetic_type' => PhoneticType::class,
         'deleted_at' => 'datetime',
     ];
 
@@ -144,14 +159,17 @@ class Address extends Model
     {
         $this->setTable(config('rinvex.addresses.tables.addresses'));
         $this->mergeRules([
-            'addressable_id' => 'required|integer',
+            'salutation_id' => 'nullable|uuid|exists:salutations,id',
+            'addressable_id' => 'required|string',
             'addressable_type' => 'required|string|strip_tags|max:150',
             'label' => 'nullable|string|strip_tags|max:150',
-            'first_name' => 'required|string|strip_tags|max:150',
+            'first_name' => 'nullable|required_if:organization,null|string|strip_tags|max:150',
             'last_name' => 'nullable|string|strip_tags|max:150',
-            'organization' => 'nullable|string|strip_tags|max:150',
+            'organization' => 'nullable|required_if:first_name,null|string|strip_tags|max:150',
+            'department' => 'nullable|string|strip_tags|max:150',
             'country_code' => 'nullable|alpha|size:2|country',
             'street' => 'nullable|string|strip_tags|max:150',
+            'street_number' => 'nullable|string|strip_tags|max:150',
             'address_supplement' => 'nullable|string|strip_tags|max:150',
             'state' => 'nullable|string|strip_tags|max:150',
             'city' => 'nullable|string|strip_tags|max:150',

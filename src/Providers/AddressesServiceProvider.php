@@ -21,9 +21,9 @@ class AddressesServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        MigrateCommand::class => 'command.rinvex.addresses.migrate',
-        PublishCommand::class => 'command.rinvex.addresses.publish',
-        RollbackCommand::class => 'command.rinvex.addresses.rollback',
+        MigrateCommand::class,
+        PublishCommand::class,
+        RollbackCommand::class,
     ];
 
     /**
@@ -40,7 +40,9 @@ class AddressesServiceProvider extends ServiceProvider
         ]);
 
         // Register console commands
-        $this->registerCommands($this->commands);
+        if ($this->app->runningInConsole()) {
+            $this->commands($this->commands);
+        }
     }
 
     /**
@@ -49,8 +51,13 @@ class AddressesServiceProvider extends ServiceProvider
     public function boot()
     {
         // Publish Resources
-        $this->publishesConfig('rinvex/laravel-addresses');
-        $this->publishesMigrations('rinvex/laravel-addresses');
-        ! $this->autoloadMigrations('rinvex/laravel-addresses') || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'rinvex.addresses');
+
+        // publish config files
+        $this->publishes([
+            __DIR__.'/../../config/config.php' => config_path('rinvex.addresses.php'),
+        ], 'config');
+
+//        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
     }
 }
