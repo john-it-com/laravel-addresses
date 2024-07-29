@@ -48,9 +48,9 @@
     ],
     "require": {
         "php": "^8.0.0",
-        "illuminate/console": "^9.0.0 || ^10.0.0",
-        "illuminate/database": "^9.0.0 || ^10.0.0",
-        "illuminate/support": "^9.0.0 || ^10.0.0",
+        "illuminate/console": "11.0.0",
+        "illuminate/database": "^11.0.0",
+        "illuminate/support": "^11.0.0",
         "jackpopp/geodistance": "^1.2.0",
         "rinvex/countries": "^9.0.0",
         "rinvex/laravel-support": "^7.0.0"
