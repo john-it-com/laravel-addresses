@@ -48,7 +48,6 @@
     ],
     "require": {
         "php": "^8.0.0",
-        "illuminate/console": "11.0.0",
         "illuminate/database": "^11.0.0",
         "illuminate/support": "^11.0.0",
         "jackpopp/geodistance": "^1.2.0",
