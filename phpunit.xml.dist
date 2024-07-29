@@ -35,7 +35,7 @@
     </logging>
     <php>
         <server name="APP_ENV" value="testing" />
-        <server name="CACHE_DRIVER" value="array" />
+        <server name="CACHE_STORE" value="array" />
         <server name="SESSION_DRIVER" value="array" />
         <server name="QUEUE_CONNECTION" value="sync" />
         <server name="DB_CONNECTION" value="sqlite" />
