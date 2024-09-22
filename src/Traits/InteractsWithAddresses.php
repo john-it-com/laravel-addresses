@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Rinvex\Addresses\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use JohnIt\Bc\Core\Domain\Contracts\DeleteAddressActionInterface;
 use JohnIt\Bc\Core\Domain\Models\Address;
-use JohnIt\Bc\Core\Domain\Models\Email;
 
 trait InteractsWithAddresses
 {
@@ -44,7 +43,7 @@ trait InteractsWithAddresses
     {
         static::deleting(function (self $model) {
             $model->addresses()->cursor()->each(function(Address $address) {
-                $address->forceDelete();
+                app(DeleteAddressActionInterface::class)($address);
             });
         });
     }
